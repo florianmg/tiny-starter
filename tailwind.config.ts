@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss';
 
+// daiyUI config doc: https://daisyui.com/docs/config/
+
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
