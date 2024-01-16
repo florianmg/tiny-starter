@@ -18,7 +18,7 @@ export default function Home() {
 export async function getStaticProps(context: GetStaticPropsContext) {
   return {
     props: {
-      ...(await serverSideTranslations(context.locale || 'fr', ['common'])),
+      ...(await serverSideTranslations(context.locale || 'en', ['common'])),
     },
   };
 }

@@ -1,0 +1,16 @@
+{
+  "title": "Please login to continue",
+  "email": "Email",
+  "password": "Password",
+  "submit": "Login",
+  "google": "Continue with Google",
+  "noAccount": "Don't have an account?",
+  "errors": {
+    "password": {
+      "too_small": "Password is too short (6 characters min)"
+    },
+    "email": {
+      "invalid_string": "Email is invalid"
+    }
+  }
+}
