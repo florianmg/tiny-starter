@@ -5,6 +5,7 @@
   "submit": "Login",
   "google": "Continue with Google",
   "noAccount": "Don't have an account?",
+  "loading": "Logging in...",
   "errors": {
     "password": {
       "too_small": "Password is too short (6 characters min)"
