@@ -1,0 +1,17 @@
+{
+  "title": "Create your account",
+  "email": "Email",
+  "password": "Password",
+  "submit": "Create account",
+  "google": "Continue with Google",
+  "alreadyHaveAccount": "Already have an account ?",
+  "loading": "Creating your account...",
+  "errors": {
+    "email": {
+      "invalid_string": "Email is invalid"
+    },
+    "password": {
+      "too_small": "Password must be submitted"
+    }
+  }
+}
