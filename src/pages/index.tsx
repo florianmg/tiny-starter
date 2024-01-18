@@ -4,6 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticPropsContext } from 'next/types';
 import { useTranslation } from 'next-i18next';
 import { useAuthStore } from '@/store/auth.store';
+import NavBar from '@/components/nav-bar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -12,6 +13,7 @@ export default function Home() {
   const user = useAuthStore((state) => state.user);
   return (
     <main>
+      <NavBar />
       <p>{t('appname')}</p>
       <p>{user?.email}</p>
     </main>

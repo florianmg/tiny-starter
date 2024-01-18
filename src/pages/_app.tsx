@@ -20,12 +20,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     });
   }, [setUser]);
 
-  return (
-    <>
-      <NavBar />
-      <Component {...pageProps} />
-    </>
-  );
+  return <Component {...pageProps} />;
 };
 
 export default appWithTranslation(App);

@@ -1,3 +1,8 @@
 {
-  "appname": "Tiny Starter"
+  "appname": "Tiny Starter",
+  "navbar": {
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "register": "Register"
+  }
 }
