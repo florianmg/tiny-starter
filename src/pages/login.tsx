@@ -13,6 +13,7 @@ import {
   signInWithPopup,
   signInWithEmailAndPassword,
   User,
+  UserCredential,
 } from 'firebase/auth';
 
 import { pages } from '@/constants/pages.constants';
@@ -21,6 +22,7 @@ import { LoaderOverlay } from '@/components/loader-overlay';
 import { auth } from '@/configs/client.firebase';
 import { useState } from 'react';
 import { useAuthStore } from '@/store/auth.store';
+import { getI18nFirebaseErrorKey } from '@/lib/utils';
 
 const loginFormSchema = z.object({
   email: z.string().email(),
@@ -30,6 +32,7 @@ const loginFormSchema = z.object({
 const Login = () => {
   const { t } = useTranslation('login');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorKey, setErrorKey] = useState<string>();
   const setUser = useAuthStore((state) => state.setUser);
   const router = useRouter();
   const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -39,6 +42,18 @@ const Login = () => {
       password: '',
     },
   });
+
+  const onAuthSuccess = (credentials: UserCredential) => {
+    const user = credentials.user as User;
+    setUser(user);
+    setIsLoading(false);
+    router.push(pages.home);
+  };
+
+  const onAuthFailure = (error: unknown) => {
+    setIsLoading(false);
+    setErrorKey(getI18nFirebaseErrorKey(error));
+  };
 
   const onSubmit = async (data: z.infer<typeof loginFormSchema>) => {
     if (isLoading) return;
@@ -50,13 +65,9 @@ const Login = () => {
         email,
         password
       );
-      const user = credentials.user as User;
-      setUser(user);
-      setIsLoading(false);
-      router.push(pages.home);
+      onAuthSuccess(credentials);
     } catch (error) {
-      setIsLoading(false);
-      console.log(error);
+      onAuthFailure(error);
     }
   };
 
@@ -66,13 +77,9 @@ const Login = () => {
       setIsLoading(true);
       const googleProvider = new GoogleAuthProvider();
       const credentials = await signInWithPopup(auth, googleProvider);
-      const user = credentials.user as User;
-      setUser(user);
-      setIsLoading(false);
-      router.push(pages.home);
+      onAuthSuccess(credentials);
     } catch (error) {
-      setIsLoading(false);
-      console.log(error);
+      onAuthFailure(error);
     }
   };
 
@@ -88,6 +95,11 @@ const Login = () => {
             className="mx-auto"
           />
           <h1 className="text-xl font-bold text-center">{t('title')}</h1>
+          {errorKey && (
+            <p className="text text-error font-bold text-center">
+              {t(errorKey, { defaultValue: t('errors.default') })}
+            </p>
+          )}
           <form className="space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
             <FormInput
               label={t('email')}
@@ -148,7 +160,10 @@ const Login = () => {
 export async function getStaticProps(context: GetStaticPropsContext) {
   return {
     props: {
-      ...(await serverSideTranslations(context.locale || 'en', ['login'])),
+      ...(await serverSideTranslations(context.locale || 'en', [
+        'login',
+        'firebase',
+      ])),
     },
   };
 }

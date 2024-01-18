@@ -12,6 +12,7 @@
     },
     "password": {
       "too_small": "Password is too short (6 characters min)"
-    }
+    },
+    "default": "An error occured, please try again later."
   }
 }

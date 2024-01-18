@@ -13,6 +13,8 @@ import {
   signInWithPopup,
   createUserWithEmailAndPassword,
   User,
+  AuthCredential,
+  UserCredential,
 } from 'firebase/auth';
 
 import { pages } from '@/constants/pages.constants';
@@ -21,6 +23,8 @@ import { LoaderOverlay } from '@/components/loader-overlay';
 import { useState } from 'react';
 import { useAuthStore } from '@/store/auth.store';
 import { auth } from '@/configs/client.firebase';
+import { getI18nFirebaseErrorKey } from '@/lib/utils';
+import { on } from 'events';
 
 const registerFormSchema = z.object({
   email: z.string().email(),
@@ -30,6 +34,7 @@ const registerFormSchema = z.object({
 const Register = () => {
   const { t } = useTranslation('register');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorKey, setErrorKey] = useState<string>();
   const setUser = useAuthStore((state) => state.setUser);
   const router = useRouter();
   const form = useForm<z.infer<typeof registerFormSchema>>({
@@ -40,6 +45,17 @@ const Register = () => {
     },
   });
 
+  const onAuthSuccess = (credentials: UserCredential) => {
+    const user = credentials.user as User;
+    setUser(user);
+    setIsLoading(false);
+    router.push(pages.home);
+  };
+  const onAuthFailure = (error: unknown) => {
+    setIsLoading(false);
+    setErrorKey(getI18nFirebaseErrorKey(error));
+  };
+
   const onSubmit = async (data: z.infer<typeof registerFormSchema>) => {
     const { email, password } = data;
     try {
@@ -49,13 +65,9 @@ const Register = () => {
         email,
         password
       );
-      const user = credentials.user as User;
-      setUser(user);
-      setIsLoading(false);
-      router.push(pages.home);
+      onAuthSuccess(credentials);
     } catch (error) {
-      setIsLoading(false);
-      console.log(error);
+      onAuthFailure(error);
     }
   };
 
@@ -64,13 +76,9 @@ const Register = () => {
       setIsLoading(true);
       const googleProvider = new GoogleAuthProvider();
       const credentials = await signInWithPopup(auth, googleProvider);
-      const user = credentials.user as User;
-      setUser(user);
-      setIsLoading(false);
-      router.push(pages.home);
+      onAuthSuccess(credentials);
     } catch (error) {
-      setIsLoading(false);
-      console.log(error);
+      onAuthFailure(error);
     }
   };
 
@@ -86,7 +94,13 @@ const Register = () => {
             className="mx-auto"
           />
           <h1 className="text-xl font-bold text-center">{t('title')}</h1>
+
           <form className="space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
+            {errorKey && (
+              <p className="text text-error font-bold text-center">
+                {t(errorKey, { defaultValue: t('errors.default') })}
+              </p>
+            )}
             <FormInput
               label={t('email')}
               name="email"

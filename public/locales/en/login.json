@@ -12,6 +12,7 @@
     },
     "email": {
       "invalid_string": "Email is invalid"
-    }
+    },
+    "default": "Something went wrong, please try again later."
   }
 }
