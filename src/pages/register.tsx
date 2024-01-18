@@ -7,10 +7,19 @@ import { useTranslation } from 'next-i18next';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+  User,
+} from 'firebase/auth';
 
 import { pages } from '@/constants/pages.constants';
 import { FormInput } from '@/components/form-input';
 import { LoaderOverlay } from '@/components/loader-overlay';
+import { useState } from 'react';
+import { useAuthStore } from '@/store/auth.store';
+import { auth } from '@/configs/client.firebase';
 
 const registerFormSchema = z.object({
   email: z.string().email(),
@@ -19,6 +28,8 @@ const registerFormSchema = z.object({
 
 const Register = () => {
   const { t } = useTranslation('register');
+  const [isLoading, setIsLoading] = useState(false);
+  const setUser = useAuthStore((state) => state.setUser);
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -28,15 +39,42 @@ const Register = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof registerFormSchema>) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
+    const { email, password } = data;
+    try {
+      setIsLoading(true);
+      const credentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = credentials.user as User;
+      setUser(user);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
+
+  const onGoogleAuth = async () => {
+    try {
+      setIsLoading(true);
+      const googleProvider = new GoogleAuthProvider();
+      const credentials = await signInWithPopup(auth, googleProvider);
+      const user = credentials.user as User;
+      setUser(user);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
   };
 
   return (
     <div className="w-screen h-screen bg-primary-content flex justify-center items-center">
       <div className="flex bg-white p-6 rounded-box">
         <LoaderOverlay
-          isLoading={form.formState.isSubmitting}
+          isLoading={form.formState.isSubmitting || isLoading}
           className="space-y-4 w-80"
         >
           <Image
@@ -73,7 +111,11 @@ const Register = () => {
             </button>
           </form>
           <div className="divider">OR</div>
-          <button className="btn w-full gap-3" type="submit">
+          <button
+            className="btn w-full gap-3"
+            type="button"
+            onClick={onGoogleAuth}
+          >
             <Image
               src="/images/google-logo.webp"
               width={24}
