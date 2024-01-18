@@ -39,6 +39,7 @@ const Login = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof loginFormSchema>) => {
+    if (isLoading) return;
     const { email, password } = data;
     try {
       setIsLoading(true);
@@ -57,6 +58,7 @@ const Login = () => {
   };
 
   const onGoogleAuth = async () => {
+    if (isLoading) return;
     try {
       setIsLoading(true);
       const googleProvider = new GoogleAuthProvider();
@@ -103,7 +105,11 @@ const Login = () => {
               }
               register={form.register}
             />
-            <button className="btn btn-primary w-full" type="submit">
+            <button
+              className="btn btn-primary w-full"
+              type="submit"
+              disabled={isLoading}
+            >
               {t('submit')}
             </button>
           </form>
@@ -112,6 +118,7 @@ const Login = () => {
             className="btn w-full gap-3"
             type="button"
             onClick={onGoogleAuth}
+            disabled={isLoading}
           >
             <Image
               src="/images/google-logo.webp"

@@ -103,7 +103,11 @@ const Register = () => {
               }
               register={form.register}
             />
-            <button className="btn btn-primary w-full" type="submit">
+            <button
+              className="btn btn-primary w-full"
+              type="submit"
+              disabled={isLoading}
+            >
               {t('submit')}
             </button>
           </form>
@@ -112,6 +116,7 @@ const Register = () => {
             className="btn w-full gap-3"
             type="button"
             onClick={onGoogleAuth}
+            disabled={isLoading}
           >
             <Image
               src="/images/google-logo.webp"
