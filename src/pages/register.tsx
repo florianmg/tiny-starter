@@ -48,7 +48,7 @@ const Register = () => {
     const user = credentials.user as User;
     setUser(user);
     setIsLoading(false);
-    router.push(pages.home);
+    router.push(pages.dashboard);
   };
   const onAuthFailure = (error: unknown) => {
     setIsLoading(false);
