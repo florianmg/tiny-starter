@@ -89,7 +89,11 @@ const Login = () => {
       <NavBar />
       <div className="w-screen h-[calc(100vh_-_68px)] min-h-[600px] bg-primary-content flex justify-center items-center">
         <div className="w-full max-w-xs bg-white p-6 rounded-box">
-          <LoaderOverlay isLoading={isLoading} className="space-y-4">
+          <LoaderOverlay
+            isLoading={isLoading}
+            className="space-y-4"
+            label={t('loading')}
+          >
             <Image
               src="/images/logo.svg"
               width={175}

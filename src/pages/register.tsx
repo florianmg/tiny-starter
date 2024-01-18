@@ -86,7 +86,11 @@ const Register = () => {
       <NavBar />
       <div className="w-screen h-[calc(100vh_-_68px)] min-h-[600px] bg-primary-content flex justify-center items-center">
         <div className="flex bg-white p-6 rounded-box">
-          <LoaderOverlay isLoading={isLoading} className="space-y-4 w-80">
+          <LoaderOverlay
+            isLoading={isLoading}
+            className="space-y-4 w-80"
+            label={t('loading')}
+          >
             <Image
               src="/images/logo.svg"
               width={175}
