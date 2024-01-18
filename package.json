@@ -17,13 +17,15 @@
     "lucide-react": "^0.310.0",
     "next": "14.0.4",
     "next-i18next": "^15.2.0",
+    "nookies": "^2.5.2",
     "prettier": "^3.2.2",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.49.3",
     "react-i18next": "^14.0.0",
     "tailwind-merge": "^2.2.0",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@types/node": "^20",
