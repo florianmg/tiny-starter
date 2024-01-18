@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { GetStaticPropsContext } from 'next/types';
+import { useRouter } from 'next/navigation';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
@@ -30,6 +31,7 @@ const Login = () => {
   const { t } = useTranslation('login');
   const [isLoading, setIsLoading] = useState(false);
   const setUser = useAuthStore((state) => state.setUser);
+  const router = useRouter();
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -51,6 +53,7 @@ const Login = () => {
       const user = credentials.user as User;
       setUser(user);
       setIsLoading(false);
+      router.push(pages.home);
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -66,6 +69,7 @@ const Login = () => {
       const user = credentials.user as User;
       setUser(user);
       setIsLoading(false);
+      router.push(pages.home);
     } catch (error) {
       setIsLoading(false);
       console.log(error);
