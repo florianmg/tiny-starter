@@ -73,10 +73,7 @@ const Login = () => {
   return (
     <div className="w-screen h-screen bg-primary-content flex justify-center items-center">
       <div className="w-full max-w-xs bg-white p-6 rounded-box">
-        <LoaderOverlay
-          isLoading={form.formState.isSubmitting || isLoading}
-          className="space-y-4"
-        >
+        <LoaderOverlay isLoading={isLoading} className="space-y-4">
           <Image
             src="/images/logo.svg"
             width={175}
