@@ -11,7 +11,7 @@
       "invalid_string": "Email is invalid"
     },
     "password": {
-      "too_small": "Password must be submitted"
+      "too_small": "Password is too short (6 characters min)"
     }
   }
 }

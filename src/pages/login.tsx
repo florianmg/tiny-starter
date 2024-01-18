@@ -23,7 +23,7 @@ import { useAuthStore } from '@/store/auth.store';
 
 const loginFormSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(6),
+  password: z.string().min(1),
 });
 
 const Login = () => {

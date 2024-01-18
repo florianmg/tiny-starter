@@ -8,7 +8,7 @@
   "loading": "Logging in...",
   "errors": {
     "password": {
-      "too_small": "Password is too short (6 characters min)"
+      "too_small": "Password must be submitted"
     },
     "email": {
       "invalid_string": "Email is invalid"
