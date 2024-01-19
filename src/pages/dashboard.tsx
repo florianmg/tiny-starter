@@ -11,10 +11,12 @@ import { auth } from '@/configs/admin.firebase';
 export default function Dashboard() {
   const { t } = useTranslation();
   const user = useAuthStore((state) => state.user);
+  const premiumPlan = useAuthStore((state) => state.premiumPlan);
   return (
     <main>
       <p>this is the dashboard</p>
-      <p>{user?.email}</p>
+      <p>email: {user?.email}</p>
+      <p>current plan: {premiumPlan}</p>
     </main>
   );
 }
