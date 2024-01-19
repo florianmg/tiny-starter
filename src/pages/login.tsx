@@ -9,6 +9,7 @@ import { useTranslation } from 'next-i18next';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import nookies from 'nookies';
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -44,9 +45,11 @@ const Login = () => {
     },
   });
 
-  const onAuthSuccess = (credentials: UserCredential) => {
+  const onAuthSuccess = async (credentials: UserCredential) => {
     const user = credentials.user as User;
+    const token = await user.getIdToken(true);
     setUser(user);
+    nookies.set(undefined, 'token', token, { path: '/' });
     setIsLoading(false);
     router.push(pages.dashboard);
   };
@@ -66,7 +69,7 @@ const Login = () => {
         email,
         password
       );
-      onAuthSuccess(credentials);
+      await onAuthSuccess(credentials);
     } catch (error) {
       onAuthFailure(error);
     }
@@ -78,7 +81,7 @@ const Login = () => {
       setIsLoading(true);
       const googleProvider = new GoogleAuthProvider();
       const credentials = await signInWithPopup(auth, googleProvider);
-      onAuthSuccess(credentials);
+      await onAuthSuccess(credentials);
     } catch (error) {
       onAuthFailure(error);
     }
