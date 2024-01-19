@@ -3,6 +3,8 @@
   "navbar": {
     "dashboard": "Dashboard",
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "logout": "Logout",
+    "profile": "Profile"
   }
 }

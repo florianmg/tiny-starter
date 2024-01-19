@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Fragment } from 'react';
 
 import { useTranslation } from 'next-i18next';
+import nookies from 'nookies';
 
 import { useAuthStore } from '@/store/auth.store';
 import { pages } from '@/constants/pages.constants';
@@ -24,6 +25,11 @@ const NavBar = () => {
   const { t } = useTranslation('common');
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
+
+  const onLogout = () => {
+    logout();
+    nookies.destroy(null, 'token');
+  };
 
   return (
     <div className="navbar bg-base-100 max-w-7xl mx-auto">
@@ -69,9 +75,31 @@ const NavBar = () => {
       </div>
       <div className="navbar-end space-x-4">
         {user ? (
-          <Link href={pages.dashboard} className="btn btn-ghost">
-            {t('navbar.dashboard')}
-          </Link>
+          <Fragment>
+            <Link href={pages.dashboard} className="btn btn-ghost">
+              {t('navbar.dashboard')}
+            </Link>
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button">
+                <div className="avatar placeholder">
+                  <div className="bg-neutral text-neutral-content rounded-full w-8">
+                    <span className="text-xs">AA</span>
+                  </div>
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <Link href={pages.profile}>{t('navbar.profile')}</Link>
+                </li>
+                <li>
+                  <p onClick={onLogout}>{t('navbar.logout')}</p>
+                </li>
+              </ul>
+            </div>
+          </Fragment>
         ) : (
           <Fragment>
             <Link className="btn btn-ghost" href={pages.login}>
