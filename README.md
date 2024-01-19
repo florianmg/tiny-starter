@@ -33,6 +33,11 @@ Happy Hacking
 
 1. Go to left menu `Create > Cloud Firestore > Create database`. Select a region and start in test mode. You can updates security rules later.
 
+#### Configure Firestore Admin SDK
+
+1. Generate a new private key by going to `Project parameters > Service Account > Generate new private key` (always keep secret)
+2. Report values in your `.env.local` file.
+
 ### Configure Stripe
 
 To configure Stripe, follow these steps:
