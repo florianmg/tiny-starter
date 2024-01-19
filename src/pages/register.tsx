@@ -160,7 +160,7 @@ const Register = () => {
               {t('alreadyHaveAccount')}
             </Link>
           </LoaderOverlay>
-          <div className="w-[500px] flex justify-center items-center box-border">
+          <div className="hidden w-[500px] lg:flex justify-center items-center box-border">
             <div className="text-center px-6">
               <p>
                 Marketing stuff
