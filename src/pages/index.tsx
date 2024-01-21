@@ -1,22 +1,19 @@
-import { Inter } from 'next/font/google';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { GetStaticPropsContext } from 'next/types';
 import { useTranslation } from 'next-i18next';
 import { useAuthStore } from '@/store/auth.store';
 import NavBar from '@/components/nav-bar';
-
-const inter = Inter({ subsets: ['latin'] });
+import { PageWrapperWithNavBar } from '@/components/page-wrapper-with-navbar';
 
 export default function Home() {
   const { t } = useTranslation();
   const user = useAuthStore((state) => state.user);
   return (
-    <main>
-      <NavBar />
+    <PageWrapperWithNavBar>
       <p>{t('appname')}</p>
       <p>{user?.email}</p>
-    </main>
+    </PageWrapperWithNavBar>
   );
 }
 
