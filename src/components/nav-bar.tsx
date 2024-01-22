@@ -9,10 +9,11 @@ import { useAuthStore } from '@/store/auth.store';
 import { pages } from '@/constants/pages.constants';
 
 const CenterMenu = () => {
+  const { t } = useTranslation('common');
   return (
     <Fragment>
       <li>
-        <a>Pricing</a>
+        <Link href={pages.pricing}>{t('navbar.pricing')}</Link>
       </li>
       <li>
         <a>FAQ</a>
@@ -32,7 +33,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="navbar bg-base-100 max-w-7xl mx-auto">
+    <div className="navbar bg-base-100 max-w-7xl mx-auto h-[70px]">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

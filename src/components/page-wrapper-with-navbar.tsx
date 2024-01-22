@@ -1,28 +1,26 @@
 import { ReactNode, Fragment, FC } from 'react';
 import NavBar from '@/components/nav-bar';
 import { cn } from '@/lib/utils';
-import { ClassNameValue } from 'tailwind-merge';
 
-type PageWrapperWithNavBarProps = {
+type PageWrapperWithNavBarProps = React.HTMLAttributes<HTMLDivElement> & {
   children: ReactNode;
   isContentCentered?: boolean;
-  classNames?: ClassNameValue;
 };
 
 const PageWrapperWithNavBar: FC<PageWrapperWithNavBarProps> = ({
   children,
   isContentCentered = false,
-  classNames,
+  className,
 }) => {
   return (
     <Fragment>
       <NavBar />
       <main
         className={cn(
-          'w-screen h-[calc(100vh_-_68px)] min-h-[600px] bg-primary-content',
+          'w-screen min-h-[calc(100vh_-_70px)] bg-primary-content py-10',
+          className,
           {
             'flex justify-center items-center': isContentCentered,
-            classNames: !!classNames,
           }
         )}
       >
