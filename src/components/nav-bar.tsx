@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment } from 'react';
+import { useRouter } from 'next/router';
 
 import { useTranslation } from 'next-i18next';
 import nookies from 'nookies';
@@ -26,10 +27,12 @@ const NavBar = () => {
   const { t } = useTranslation('common');
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
+  const router = useRouter();
 
   const onLogout = () => {
     logout();
     nookies.destroy(null, 'token');
+    router.push(pages.home);
   };
 
   return (
