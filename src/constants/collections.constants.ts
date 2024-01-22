@@ -1,4 +1,4 @@
 export const collections = {
   userInfos: 'userInfos',
-  checkoutSessions: 'checkoutSessions',
+  checkoutSessions: 'checkout_sessions',
 };
