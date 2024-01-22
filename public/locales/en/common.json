@@ -5,6 +5,7 @@
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
-    "profile": "Profile"
+    "profile": "Profile",
+    "pricing": "Pricing"
   }
 }

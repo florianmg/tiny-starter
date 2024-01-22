@@ -4,4 +4,5 @@ export const pages = {
   register: '/register',
   dashboard: '/dashboard',
   profile: '/profile',
+  pricing: '/pricing',
 };
