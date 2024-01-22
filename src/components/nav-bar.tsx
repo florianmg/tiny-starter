@@ -114,30 +114,6 @@ const NavBar = () => {
       </div>
     </div>
   );
-
-  return (
-    <nav>
-      <ul>
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        {user ? (
-          <li>
-            <button onClick={() => logout()}>logout</button>
-          </li>
-        ) : (
-          <>
-            <li>
-              <Link href="/login">login</Link>
-            </li>
-            <li>
-              <Link href="/register">register</Link>
-            </li>
-          </>
-        )}
-      </ul>
-    </nav>
-  );
 };
 
 export default NavBar;
