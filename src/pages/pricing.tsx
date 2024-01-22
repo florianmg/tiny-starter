@@ -1,11 +1,18 @@
+import { useRouter } from 'next/navigation';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticPropsContext } from 'next/types';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
 import { db } from '@/configs/admin.firebase';
 import { PageWrapperWithNavBar } from '@/components/page-wrapper-with-navbar';
+import { useAuthStore } from '@/store/auth.store';
+import { createCheckoutSession } from '@/stripe/createCheckoutSession';
+import { pages } from '@/constants/pages.constants';
+import { LoaderOverlay } from '@/components/loader-overlay';
+import { cp } from 'fs';
+import { Loader2 } from 'lucide-react';
 
 type Product = {
   productId: string;
@@ -22,23 +29,41 @@ type ProductsPageProps = {
   products: Product[];
 };
 
+const Features: FC<{ productRole: string }> = ({ productRole }) => {
+  const { t } = useTranslation();
+  const features = t(`pricing:features.${productRole}`, {
+    returnObjects: true,
+  });
+
+  return (
+    <ul>
+      {(features as string[]).map((feature: string, index: number) => (
+        <ul key={index}>
+          <li>{feature}</li>
+        </ul>
+      ))}
+    </ul>
+  );
+};
+
 const Pricing: FC<ProductsPageProps> = ({ products }) => {
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
+  const user = useAuthStore((state) => state.user);
+  const router = useRouter();
 
-  const displayFeatures = (productRole: string) => {
-    const features = t(`pricing:features.${productRole}`, {
-      returnObjects: true,
-    });
-
-    return (
-      <ul>
-        {(features as string[]).map((feature: string, index: number) => (
-          <ul key={index}>
-            <li>{feature}</li>
-          </ul>
-        ))}
-      </ul>
-    );
+  const onSubscriptionSelection = async (priceId: string) => {
+    setIsLoading(true);
+    if (user) {
+      try {
+        await createCheckoutSession({ priceId, uid: user.uid });
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+      }
+    } else {
+      router.push(`${pages.login}?redirect=${pages.pricing.split('/')[1]}`);
+    }
   };
 
   if (!products || products.length === 0)
@@ -52,34 +77,43 @@ const Pricing: FC<ProductsPageProps> = ({ products }) => {
       <h1 className="font-extrabold text-center text-7xl">
         {t('pricing:pageTitle')}
       </h1>
-      <div className="flex flex-col items-center justify-center sm:flex-row gap-6">
-        {products.map((product) => (
-          <div
-            className="card w-72 bg-base-100 shadow-xl"
-            key={product.priceId}
-          >
-            <div className="card-body">
-              <h2 className="card-title text-3xl">{product.name}</h2>
-              <p>{product.description}</p>
-              <p className="font-extrabold mt-3">
-                <span className="text-5xl">
-                  {product.unit_amount / 100}
-                  {t(`pricing:${product.currency}`)}
-                </span>{' '}
-                <span className="text-xl text-gray-400">
-                  /{t(`pricing:${product.interval}`)}
-                </span>
-              </p>
-              <div className="mt-6">{displayFeatures(product.role)}</div>
-              <div className="card-actions justify-end mt-6">
-                <button className="btn btn-primary">
-                  {t('pricing:choose')}
-                </button>
+      {isLoading ? (
+        <div className="text-center space-y-4">
+          <Loader2 className="animate-spin mx-auto" />
+          <p>{t('pricing:stripeRedirect')}</p>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center sm:flex-row gap-6">
+          {products.map((product) => (
+            <div className="card w-72 bg-base-100" key={product.priceId}>
+              <div className="card-body">
+                <h2 className="card-title text-3xl">{product.name}</h2>
+                <p>{product.description}</p>
+                <p className="font-extrabold mt-3">
+                  <span className="text-5xl">
+                    {product.unit_amount / 100}
+                    {t(`pricing:${product.currency}`)}
+                  </span>{' '}
+                  <span className="text-xl text-gray-400">
+                    /{t(`pricing:${product.interval}`)}
+                  </span>
+                </p>
+                <div className="mt-6">
+                  <Features productRole={product.role} />
+                </div>
+                <div className="card-actions justify-end mt-6">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => onSubscriptionSelection(product.priceId)}
+                  >
+                    {t('pricing:choose')}
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </PageWrapperWithNavBar>
   );
 };

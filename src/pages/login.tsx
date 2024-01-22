@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { GetStaticPropsContext } from 'next/types';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Fragment, useState } from 'react';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -38,6 +38,7 @@ const Login = () => {
   const [errorKey, setErrorKey] = useState<string>();
   const setUser = useAuthStore((state) => state.setUser);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -47,12 +48,17 @@ const Login = () => {
   });
 
   const onAuthSuccess = async (credentials: UserCredential) => {
+    const redirection = searchParams.get('redirect');
     const user = credentials.user as User;
     const token = await user.getIdToken(true);
     setUser(user);
     nookies.set(undefined, 'token', token, { path: '/' });
     setIsLoading(false);
-    router.push(pages.dashboard);
+    if (redirection) {
+      router.push(`/${redirection}`);
+    } else {
+      router.push(pages.dashboard);
+    }
   };
 
   const onAuthFailure = (error: unknown) => {
@@ -90,7 +96,7 @@ const Login = () => {
 
   return (
     <PageWrapperWithNavBar isContentCentered>
-      <div className="w-full max-w-xs bg-white p-6 rounded-box">
+      <div className="w-full max-w-xs bg-white p-6 rounded-box box-content">
         <LoaderOverlay
           isLoading={isLoading}
           className="space-y-4"
