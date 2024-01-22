@@ -13,6 +13,7 @@ import { pages } from '@/constants/pages.constants';
 import { LoaderOverlay } from '@/components/loader-overlay';
 import { cp } from 'fs';
 import { Loader2 } from 'lucide-react';
+import { PageTitle } from '@/components/page-title';
 
 type Product = {
   productId: string;
@@ -74,8 +75,8 @@ const Pricing: FC<ProductsPageProps> = ({ products }) => {
     );
   return (
     <PageWrapperWithNavBar className="pt-24 space-y-20">
-      <h1 className="font-extrabold text-center text-7xl">
-        {t('pricing:pageTitle')}
+      <h1>
+        <PageTitle title={t('pricing:pageTitle')} />
       </h1>
       {isLoading ? (
         <div className="text-center space-y-4">
