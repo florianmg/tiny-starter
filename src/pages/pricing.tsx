@@ -14,6 +14,8 @@ import { LoaderOverlay } from '@/components/loader-overlay';
 import { cp } from 'fs';
 import { Loader2 } from 'lucide-react';
 import { PageTitle } from '@/components/page-title';
+import { prependListener } from 'process';
+import { createPortalLink } from '@/stripe/createPortalLink';
 
 type Product = {
   productId: string;
@@ -51,11 +53,19 @@ const Pricing: FC<ProductsPageProps> = ({ products }) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const user = useAuthStore((state) => state.user);
+  const premiumPlan = useAuthStore((state) => state.premiumPlan);
   const router = useRouter();
 
   const onSubscriptionSelection = async (priceId: string) => {
     setIsLoading(true);
-    if (user) {
+    if (premiumPlan !== 'trial' && premiumPlan !== null) {
+      try {
+        const portalLinkUrl = await createPortalLink();
+        router.push(portalLinkUrl);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    } else if (user) {
       try {
         await createCheckoutSession({ priceId, uid: user.uid });
       } catch (error) {
@@ -104,10 +114,13 @@ const Pricing: FC<ProductsPageProps> = ({ products }) => {
                 </div>
                 <div className="card-actions justify-end mt-6">
                   <button
+                    disabled={premiumPlan === product.role}
                     className="btn btn-primary"
                     onClick={() => onSubscriptionSelection(product.priceId)}
                   >
-                    {t('pricing:choose')}
+                    {premiumPlan === product.role
+                      ? t('pricing:current')
+                      : t('pricing:choose')}
                   </button>
                 </div>
               </div>

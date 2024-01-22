@@ -8,6 +8,7 @@
   "eur": "€",
   "usd": "$",
   "stripeRedirect": "Redirecting to our paiement partner...",
+  "current": "Current plan",
   "features": {
     "basic": [
       "✅ 1 user",
