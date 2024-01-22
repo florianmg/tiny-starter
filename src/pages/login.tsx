@@ -137,7 +137,7 @@ const Login = () => {
               register={form.register}
             />
             <button
-              className="btn btn-primary w-full"
+              className="btn btn-neutral w-full"
               type="submit"
               disabled={isLoading}
             >
