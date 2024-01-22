@@ -1,3 +1,12 @@
 {
-  "pageTitle": "Hello you"
+  "pageTitle": "Hello you",
+  "currentSubscription": "Your subscription",
+  "update": "Update my subscription",
+  "plan": {
+    "trial": "Free trial",
+    "basic": "Basic",
+    "premium": "Premium"
+  },
+  "email": "Your email",
+  "stripeRedirect": "Redirecting to our paiement partner..."
 }
