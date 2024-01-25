@@ -8,6 +8,7 @@ import nookies from 'nookies';
 
 import { useAuthStore } from '@/store/auth.store';
 import { pages } from '@/constants/pages.constants';
+import { ProfileMenu } from './profile-menu';
 
 const CenterMenu = () => {
   const { t } = useTranslation('common');
@@ -83,7 +84,8 @@ const NavBar = () => {
             <Link href={pages.dashboard} className="btn btn-ghost">
               {t('navbar.dashboard')}
             </Link>
-            <div className="dropdown dropdown-end">
+            <ProfileMenu />
+            {/* <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button">
                 <div className="avatar placeholder">
                   <div className="bg-neutral text-neutral-content rounded-full w-8">
@@ -102,7 +104,7 @@ const NavBar = () => {
                   <p onClick={onLogout}>{t('navbar.logout')}</p>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </Fragment>
         ) : (
           <Fragment>
