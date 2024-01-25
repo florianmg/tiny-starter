@@ -1,10 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment } from 'react';
-import { useRouter } from 'next/router';
 
 import { useTranslation } from 'next-i18next';
-import nookies from 'nookies';
 
 import { useAuthStore } from '@/store/auth.store';
 import { pages } from '@/constants/pages.constants';
@@ -27,17 +25,9 @@ const CenterMenu = () => {
 const NavBar = () => {
   const { t } = useTranslation('common');
   const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logout);
-  const router = useRouter();
-
-  const onLogout = () => {
-    logout();
-    nookies.destroy(null, 'token');
-    router.push(pages.home);
-  };
 
   return (
-    <div className="navbar bg-base-100 max-w-7xl mx-auto h-[70px]">
+    <div className="navbar bg-base-100 max-w-page mx-auto h-page px-6">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

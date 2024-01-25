@@ -16,14 +16,11 @@ const PageWrapperWithNavBar: FC<PageWrapperWithNavBarProps> = ({
     <Fragment>
       <NavBar />
       <main
-        className={cn(
-          'w-screen min-h-[calc(100vh_-_70px)] bg-primary-content py-10',
-          {
-            'flex justify-center items-center': isContentCentered,
-          }
-        )}
+        className={cn('w-screen min-h-page bg-primary-content py-10', {
+          'flex justify-center items-center': isContentCentered,
+        })}
       >
-        <div className={cn('max-w-7xl mx-auto', className)}>{children}</div>
+        <div className={cn('max-w-page mx-auto', className)}>{children}</div>
       </main>
     </Fragment>
   );

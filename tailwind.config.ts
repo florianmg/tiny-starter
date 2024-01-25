@@ -9,7 +9,17 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      maxWidth: {
+        page: '1920px',
+      },
+      height: {
+        nav: '70px',
+      },
+      minHeight: {
+        page: 'calc(100vh - 70px)',
+      },
+    },
   },
   // add daisyUI plugin
   plugins: [require('daisyui')],
