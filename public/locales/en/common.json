@@ -8,5 +8,9 @@
     "profile": "Profile",
     "pricing": "Pricing",
     "faq": "FAQ"
+  },
+  "dashboardNavigation": {
+    "dashboard": "Home",
+    "settings": "Settings"
   }
 }
