@@ -28,7 +28,7 @@ const DashboardWrapper: FC<DashboardWrapperProps> = ({ children }) => {
         </div>
       </div>
       <div className="w-full h-[1px] bg-base-300" />
-      <div className="flex max-w-page mx-auto py-6 gap-x-9 px-6">
+      <div className="flex max-w-page mx-auto py-6 gap-x-9 px-6 min-h-page">
         <nav>
           <ul className="flex flex-col w-56 gap-1">
             {dashboardNavigation.map((item) => (
@@ -45,7 +45,7 @@ const DashboardWrapper: FC<DashboardWrapperProps> = ({ children }) => {
             ))}
           </ul>
         </nav>
-        <main>{children}</main>
+        <main className="w-full">{children}</main>
       </div>
     </div>
   );
