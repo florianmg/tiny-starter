@@ -10,7 +10,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import nookies from 'nookies';
-import {@/components/ui/form-input
+import {
   GoogleAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
@@ -18,9 +18,8 @@ import {@/components/ui/form-input
   UserCredential,
 } from 'firebase/auth';
 
-import { FormInput } from '@/components/form-input';
+import { FormInput } from '@/components/ui/form-input';
 import { LoaderOverlay } from '@/components/ui/loader-overlay';
-import NavBar from '@/components/nav-bar';
 import { PageWrapperWithNavBar } from '@/components/page-wrapper-with-navbar';
 import { useAuthStore } from '@/store/auth.store';
 import { auth } from '@/configs/client.firebase';
