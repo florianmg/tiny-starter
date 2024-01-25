@@ -4,6 +4,7 @@ import nookies from 'nookies';
 
 import { useTranslation } from 'next-i18next';
 import { useAuthStore } from '@/store/auth.store';
+import { DashboardWrapper } from '@/components/dashboard/dashboard-wrapper';
 
 import { pages } from '@/constants/pages.constants';
 import { auth } from '@/configs/admin.firebase';
@@ -13,11 +14,11 @@ export default function Dashboard() {
   const user = useAuthStore((state) => state.user);
   const premiumPlan = useAuthStore((state) => state.premiumPlan);
   return (
-    <main>
+    <DashboardWrapper>
       <p>this is the dashboard</p>
       <p>email: {user?.email}</p>
       <p>current plan: {premiumPlan}</p>
-    </main>
+    </DashboardWrapper>
   );
 }
 

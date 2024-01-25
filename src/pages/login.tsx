@@ -19,8 +19,8 @@ import {
 } from 'firebase/auth';
 
 import { pages } from '@/constants/pages.constants';
-import { FormInput } from '@/components/form-input';
-import { LoaderOverlay } from '@/components/loader-overlay';
+import { FormInput } from '@/components/ui/form-input';
+import { LoaderOverlay } from '@/components/ui/loader-overlay';
 import NavBar from '@/components/nav-bar';
 import { PageWrapperWithNavBar } from '@/components/page-wrapper-with-navbar';
 import { auth } from '@/configs/client.firebase';

@@ -8,7 +8,7 @@ import nookies from 'nookies';
 
 import { PageWrapperWithNavBar } from '@/components/page-wrapper-with-navbar';
 import { useAuthStore } from '@/store/auth.store';
-import { PageTitle } from '@/components/page-title';
+import { PageTitle } from '@/components/ui/page-title';
 import { pages } from '@/constants/pages.constants';
 import { auth } from '@/configs/admin.firebase';
 import { createPortalLink } from '@/stripe/createPortalLink';

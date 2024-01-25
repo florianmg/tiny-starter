@@ -10,11 +10,8 @@ import { PageWrapperWithNavBar } from '@/components/page-wrapper-with-navbar';
 import { useAuthStore } from '@/store/auth.store';
 import { createCheckoutSession } from '@/stripe/createCheckoutSession';
 import { pages } from '@/constants/pages.constants';
-import { LoaderOverlay } from '@/components/loader-overlay';
-import { cp } from 'fs';
 import { Loader2 } from 'lucide-react';
-import { PageTitle } from '@/components/page-title';
-import { prependListener } from 'process';
+import { PageTitle } from '@/components/ui/page-title';
 import { createPortalLink } from '@/stripe/createPortalLink';
 
 type Product = {
