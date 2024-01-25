@@ -1,6 +1,7 @@
 {
   "appname": "Tiny Starter",
   "navbar": {
+    "home": "Accueil",
     "dashboard": "Dashboard",
     "login": "Login",
     "register": "Register",

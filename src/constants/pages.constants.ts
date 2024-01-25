@@ -11,6 +11,10 @@ export const pages = {
 
 export const publicNavigation = [
   {
+    label: 'home',
+    path: pages.home,
+  },
+  {
     label: 'pricing',
     path: pages.pricing,
   },
