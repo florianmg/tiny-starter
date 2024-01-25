@@ -5,21 +5,16 @@ import { Fragment } from 'react';
 import { useTranslation } from 'next-i18next';
 
 import { useAuthStore } from '@/store/auth.store';
-import { pages } from '@/constants/pages.constants';
+import { pages, publicNavigation } from '@/constants/pages.constants';
 import { ProfileMenu } from './profile-menu';
 
 const CenterMenu = () => {
   const { t } = useTranslation('common');
-  return (
-    <Fragment>
-      <li>
-        <Link href={pages.pricing}>{t('navbar.pricing')}</Link>
-      </li>
-      <li>
-        <a>FAQ</a>
-      </li>
-    </Fragment>
-  );
+  return publicNavigation.map((item) => (
+    <li key={item.label}>
+      <Link href={item.path}>{t(`navbar.${item.label}`)}</Link>
+    </li>
+  ));
 };
 
 const NavBar = () => {
@@ -75,26 +70,6 @@ const NavBar = () => {
               {t('navbar.dashboard')}
             </Link>
             <ProfileMenu />
-            {/* <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button">
-                <div className="avatar placeholder">
-                  <div className="bg-neutral text-neutral-content rounded-full w-8">
-                    <span className="text-xs">AA</span>
-                  </div>
-                </div>
-              </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <Link href={pages.profile}>{t('navbar.profile')}</Link>
-                </li>
-                <li>
-                  <p onClick={onLogout}>{t('navbar.logout')}</p>
-                </li>
-              </ul>
-            </div> */}
           </Fragment>
         ) : (
           <Fragment>
