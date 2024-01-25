@@ -17,7 +17,7 @@ const DashboardWrapper: FC<DashboardWrapperProps> = ({ children }) => {
 
   return (
     <div>
-      <div className="navbar bg-base-100 h-nav max-w-page mx-auto px-6">
+      <div className="navbar bg-base-100 h-nav max-w-page mx-auto px-6 ">
         <div className="navbar-start">
           <Link href={pages.dashboard}>
             <Image src="/images/logo.svg" alt="logo" width={180} height={70} />
@@ -27,7 +27,8 @@ const DashboardWrapper: FC<DashboardWrapperProps> = ({ children }) => {
           <ProfileMenu />
         </div>
       </div>
-      <div className="flex max-w-page mx-auto py-6 gap-x-9">
+      <div className="w-full h-[1px] bg-base-300" />
+      <div className="flex max-w-page mx-auto py-6 gap-x-9 px-6">
         <nav>
           <ul className="flex flex-col w-56 gap-1">
             {dashboardNavigation.map((item) => (
